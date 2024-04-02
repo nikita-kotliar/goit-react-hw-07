@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import css from "./ContactForm.module.css";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { addContact } from "../../redux/contactsOps";
 
 const FeedbackSchema = Yup.object().shape({
   username: Yup.string()
@@ -26,23 +26,27 @@ const FeedbackSchema = Yup.object().shape({
     .required(<span className={css.error}>Required</span>),
 });
 
-const initialValues = {
-  username: "",
-  tel: "",
-};
-
 export default function ContactForm() {
   const nameFieldId = useId();
-  const telFieldId = useId();
+  const numberFieldId = useId();
 
   const dispatch = useDispatch();
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{
+        id: "",
+        name: "",
+        number: "",
+      }}
       onSubmit={(values, { resetForm }) => {
-        resetForm();
-        dispatch(addContact(values));
+        const newContact = {
+          name: values.name,
+          number: values.number,
+        };
+        resetForm(); 
+        dispatch(addContact(newContact));
+        
       }}
       validationSchema={FeedbackSchema}
     >
@@ -54,21 +58,21 @@ export default function ContactForm() {
           <Field
             className={css.input}
             type="text"
-            name="username"
+            name="name"
             id={nameFieldId}
           />
           <ErrorMessage name="username" as="span" />
         </div>
 
         <div className={css.box}>
-          <label className={css.text} htmlFor={telFieldId}>
+          <label className={css.text} htmlFor={numberFieldId}>
             Tel
           </label>
           <Field
             className={css.input}
             type="tel"
-            name="tel"
-            id={telFieldId}
+            name="number"
+            id={numberFieldId}
             onKeyDown={(e) => {
               if (
                 !(
