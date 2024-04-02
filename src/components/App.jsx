@@ -25,7 +25,7 @@ export const App = () =>{
       <ContactForm />
       <SearchBox />
       {error && <Error errorMessage={`${error}`}> Error message: </Error>}
-      {loading && <Loader>Loading message</Loader>}
+      {loading && <Loader>Loading</Loader>}
       <ContactList />
     </div>
   );
