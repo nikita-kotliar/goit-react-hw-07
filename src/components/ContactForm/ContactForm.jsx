@@ -6,11 +6,11 @@ import { useDispatch } from "react-redux";
 import { addContact } from "../../redux/contactsOps";
 
 const FeedbackSchema = Yup.object().shape({
-  username: Yup.string()
+  name: Yup.string()
     .min(3, <span className={css.error}>Too Short, min 3 symbols!</span>)
     .max(50, <span className={css.error}>Too Long, max 50 symbols!</span>)
     .required(<span className={css.error}>Required</span>),
-  tel: Yup.string()
+  number: Yup.string()
     .transform((value, originalValue) => {
       let phoneNumber = originalValue.replace(/[\s()+-]/g, "");
 

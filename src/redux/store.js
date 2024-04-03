@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import contactsReducer from "./contactsSlice";
 import filtersReducer from "./filtersSlice"; 
+import { devToolsEnhancer } from "@redux-devtools/extension";
 
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
     name: "",
   },
 };
-
+const enhancer = devToolsEnhancer();
 export const store = configureStore({
   reducer:
     {
@@ -22,4 +23,5 @@ export const store = configureStore({
       filters: filtersReducer, 
     },
   preloadedState: initialState, 
+  enhancer
 });
